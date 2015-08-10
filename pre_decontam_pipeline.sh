@@ -4,11 +4,7 @@ set -x
 # Input files
 FWD=small_R1.fastq
 REV=small_R2.fastq
-BC=lane2_barcode.txt
-
-# Config files
-ILLQC_CONFIG="illqc.json"
-DECONTAM_CONFIG="decontam.json"
+BC=small_barcode.txt
 
 # Logging
 log () {
@@ -45,8 +41,7 @@ for DNABC_R1_FILE in $DNABC_OUTPUT_DIR/*_R1.fastq; do
 	--reverse-reads "${DNABC_OUTPUT_DIR}/$SAMPLE_R2" \
 	--output-dir $ILLQC_OUTPUT_DIR \
 	--qc-output-dir $ILLQC_QC_OUTPUT_DIR \
-	--summary-file $ILLQC_SUMMARY \
-	--config-file $ILLQC_CONFIG
+	--summary-file $ILLQC_SUMMARY
     log "FINISH:illqc ${SAMPLE_NAME}"
 
     # We are done with the dnabc results and could delete them now
@@ -61,8 +56,7 @@ for DNABC_R1_FILE in $DNABC_OUTPUT_DIR/*_R1.fastq; do
 	--forward-reads "$ILLQC_OUTPUT_DIR/$SAMPLE_R1" \
 	--reverse-reads "$ILLQC_OUTPUT_DIR/$SAMPLE_R2" \
 	--output-dir $DECONTAM_OUTPUT_DIR \
-	--summary-file $DECONTAM_SUMMARY \
-        --config-file $DECONTAM_CONFIG
+	--summary-file $DECONTAM_SUMMARY
     log "FINISH:decontaminate ${SAMPLE_NAME}"
 
     # We are done with the illqc results and could delete them now
