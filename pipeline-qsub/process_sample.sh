@@ -19,18 +19,18 @@ ILLQC_SUMMARY="$SUMMARY_DIR/summary-illqc_${SAMPLE}.json"
 DECONTAM_SUMMARY="${SUMMARY_DIR}/summary-decontam_${SAMPLE}.json"
 PHYLO_SUMMARY="${SUMMARY_DIR}/summary-phylo_${SAMPLE}.json"
 PATHWAY_SUMMARY="${SUMMARY_DIR}/summary-pathway_${SAMPLE}.json"
-ILLQC_OUTPUT_DIR="illqc_results"
-ILLQC_QC_OUTPUT_DIR="illqc_reports"
-DECONTAM_OUTPUT_DIR="decontam_results"
-PHYLO_OUTPUT_DIR="phyloprofiler_results"
-PATHWAY_OUTPUT_DIR="pathfinder_results"
+ILLQC_OUTPUT_DIR="${WORK_DIR}/illqc_results"
+ILLQC_QC_OUTPUT_DIR="${WORK_DIR}/illqc_reports"
+DECONTAM_OUTPUT_DIR="${WORK_DIR}/decontam_results"
+PHYLO_OUTPUT_DIR="${WORK_DIR}/phyloprofiler_results"
+PATHWAY_OUTPUT_DIR="${WORK_DIR}/pathfinder_results"
 
 # Make the summary directory
 mkdir -p $SUMMARY_DIR
 
 # Filenames for forward and reverse FASTQ files
-R1="${SAMPLE}_R1.fastq"
-R2="${SAMPLE}_R2.fastq"
+R1="PCMP_${SAMPLE}_R1.fastq"
+R2="PCMP_${SAMPLE}_R2.fastq"
 
 
 ## Quality control
