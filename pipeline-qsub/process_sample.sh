@@ -1,5 +1,7 @@
 #!/bin/bash
 set -x
+set -e
+set -u
 
 if [ $# -ne 2 ]; then
     echo "Usage: $0 WORK_DIR SAMPLE"
