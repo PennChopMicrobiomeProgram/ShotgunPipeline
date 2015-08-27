@@ -17,35 +17,17 @@ mkdir -p "$SOFTWARE_DIR"
 BIODATA_DIR="$HOME/biodata"
 mkdir -p "$BIODATA_DIR"
 
-# Virtualenv, virtualenvwrapper
-pip install --user --upgrade virtualenv
-pip install --user --upgrade virtualenvwrapper
 
-####################################################
-## BASH CONFIG SECTION
-## This section should be added to your .bashrc file
+# Functions
 
-# Binary and lib paths used by pip
-# On OSX, these may be different
-# See http://stackoverflow.com/questions/7143077/how-can-i-install-packages-in-my-home-folder-with-pip
-PIP_BIN="$HOME/.local/bin"
-PIP_LIB="$HOME/.local/lib/python2.7/site-packages"
-
-# Add the pip install directories to PATH and PYTHONPATH
-export PATH="${PIP_BIN}:$PATH"
-export PYTHONPATH="${PIP_LIB}:$PYTHONPATH"
-
-# Initialize virtualenvwrapper
-export WORKON_HOME="$HOME/.virtualenvs"
-source "${PIP_BIN}/virtualenvwrapper.sh"
-
-## END BASH CONFIG SECTION
-####################################################
-
-
-# Make a new virtual environment
-# Pipeline should be executed in this virtual environment
-mkvirtualenv shotgun-pipeline
+download_and_unzip () {
+    # Download and unzip a file into a specified directory.
+    URL="$1"
+    FILENAME=$( basename "$URL" )
+    wget "$URL"
+    unzip "$FILENAME"
+    rm "$FILENAME"
+}
 
 
 ## STEP 1: Demultiplexing
@@ -63,18 +45,14 @@ pip install --upgrade \
 
 # Trimmomatic
 pushd "$SOFTWARE_DIR"
-wget \
+download_and_unzip \
     http://www.usadellab.org/cms/uploads/supplementary/Trimmomatic/Trimmomatic-0.33.zip
-unzip Trimmomatic-0.33.zip
-rm Trimmomatic-0.33.zip
 popd
 
 # FastQC
 pushd "$SOFTWARE_DIR"
-wget \
+download_and_unzip \
     http://www.bioinformatics.babraham.ac.uk/projects/fastqc/fastqc_v0.11.3.zip
-unzip fastqc_v0.11.3.zip
-rm fastqc_v0.11.3.zip
 popd
 
 
@@ -86,15 +64,36 @@ pip install --upgrade \
 
 # Bowtie2
 pushd "$SOFTWARE_DIR"
-wget \
+download_and_unzip \
     http://sourceforge.net/projects/bowtie-bio/files/bowtie2/2.2.6/bowtie2-2.2.6-linux-x86_64.zip
-unzip bowtie2-2.2.6-linux-x86_64.zip
-rm bowtie2-2.2.6-linux-x86_64.zip
 popd
 
 # Human genome
 pushd "$BIODATA_DIR"
-wget ftp://ftp.ccb.jhu.edu/pub/data/bowtie2_indexes/hg18.1.zip
-wget ftp://ftp.ccb.jhu.edu/pub/data/bowtie2_indexes/hg18.2.zip
-wget ftp://ftp.ccb.jhu.edu/pub/data/bowtie2_indexes/hg18.3.zip
+download_and_unzip ftp://ftp.ccb.jhu.edu/pub/data/bowtie2_indexes/hg18.1.zip
+download_and_unzip ftp://ftp.ccb.jhu.edu/pub/data/bowtie2_indexes/hg18.2.zip
+download_and_unzip ftp://ftp.ccb.jhu.edu/pub/data/bowtie2_indexes/hg18.3.zip
 popd
+
+# PhiX174 genome
+
+
+## STEP 4: Taxonomic assignment
+
+# PhylogeneticProfiler
+pip install --upgrade \
+    git+https://github.com/PennChopMicrobiomeProgram/PhylogeneticProfiler.git
+
+# metaphlan2
+# metaphlan2 dependencies
+
+
+## STEP 5: Functional assignment
+
+# PathwayAbundanceFinder
+pip install --upgrade \
+    https://github.com/PennChopMicrobiomeProgram/PathwayAbundanceFinder.git
+
+# Rapsearch2
+# KEGG database
+
