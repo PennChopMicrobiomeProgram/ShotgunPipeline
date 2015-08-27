@@ -60,7 +60,8 @@ popd
 
 # decontam
 pip install --upgrade \
-    git+https://github.com/PennChopMicrobiomeProgram/illqc.git
+    git+https://github.com/PennChopMicrobiomeProgram/decontam.git
+pip install --upgrade pysam
 
 # Bowtie2
 pushd "$SOFTWARE_DIR"
@@ -68,14 +69,13 @@ download_and_unzip \
     http://sourceforge.net/projects/bowtie-bio/files/bowtie2/2.2.6/bowtie2-2.2.6-linux-x86_64.zip
 popd
 
-# Human genome
+# Human, PhiX174 genomes
 pushd "$BIODATA_DIR"
-download_and_unzip ftp://ftp.ccb.jhu.edu/pub/data/bowtie2_indexes/hg18.1.zip
-download_and_unzip ftp://ftp.ccb.jhu.edu/pub/data/bowtie2_indexes/hg18.2.zip
-download_and_unzip ftp://ftp.ccb.jhu.edu/pub/data/bowtie2_indexes/hg18.3.zip
+download_and_unzip \
+    http://microb234.med.upenn.edu/shotgun-pipeline-files/hg18.zip
+download_and_unzip \
+    http://microb234.med.upenn.edu/shotgun-pipeline-files/phix.zip
 popd
-
-# PhiX174 genome
 
 
 ## STEP 4: Taxonomic assignment
@@ -85,7 +85,11 @@ pip install --upgrade \
     git+https://github.com/PennChopMicrobiomeProgram/PhylogeneticProfiler.git
 
 # metaphlan2
-# metaphlan2 dependencies
+pushd "$SOFTWARE_DIR"
+download_and_unzip https://bitbucket.org/biobakery/metaphlan2/get/default.zip
+popd
+pip install --upgrade numpy
+pip install --upgrade biom-format
 
 
 ## STEP 5: Functional assignment
@@ -95,5 +99,12 @@ pip install --upgrade \
     https://github.com/PennChopMicrobiomeProgram/PathwayAbundanceFinder.git
 
 # Rapsearch2
+pushd "$SOFTWARE_DIR"
+download_and_unzip \
+    http://sourceforge.net/projects/rapsearch2/files/RAPSearch2.23_64bits.tar.gz
+popd
+
 # KEGG database
+download_and_unzip \
+    http://microb234.med.upenn.edu/shotgun-pipeline-files/kegg.zip
 
