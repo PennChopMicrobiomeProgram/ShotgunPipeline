@@ -1,6 +1,8 @@
 #!/bin/bash
 # Deploy all software necessary for ShotgunPipeline
 #
+# Does not (yet) build search indexes from FASTA files.
+#
 # Pre-requisites not included in deployment:
 # python (>= 2.7.3)
 # pip
@@ -97,5 +99,6 @@ download_and_unzip RAPSearch2.23_64bits.zip
 popd
 
 # KEGG database
+pushd "$BIODATA_DIR"
 download_and_unzip kegg.zip
-# TODO: build indexes
+popd
