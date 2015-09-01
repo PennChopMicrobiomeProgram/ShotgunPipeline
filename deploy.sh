@@ -21,12 +21,9 @@ mkdir -p "$BIODATA_DIR"
 # Functions
 
 download_and_unzip () {
-    # Download and unzip a file into a specified directory.
-    URL="$1"
-    FILENAME=$( basename "$URL" )
-    wget "$URL"
-    unzip "$FILENAME"
-    rm "$FILENAME"
+    wget "http://microb234.med.upenn.edu/shotgun-pipeline-files/$1"
+    unzip "$1"
+    rm "$1"
 }
 
 
@@ -45,14 +42,12 @@ pip install --upgrade \
 
 # Trimmomatic
 pushd "$SOFTWARE_DIR"
-download_and_unzip \
-    http://www.usadellab.org/cms/uploads/supplementary/Trimmomatic/Trimmomatic-0.33.zip
+download_and_unzip Trimmomatic-0.33.zip
 popd
 
 # FastQC
 pushd "$SOFTWARE_DIR"
-download_and_unzip \
-    http://www.bioinformatics.babraham.ac.uk/projects/fastqc/fastqc_v0.11.3.zip
+download_and_unzip fastqc_v0.11.3.zip
 popd
 
 
@@ -65,17 +60,15 @@ pip install --upgrade pysam
 
 # Bowtie2
 pushd "$SOFTWARE_DIR"
-download_and_unzip \
-    http://sourceforge.net/projects/bowtie-bio/files/bowtie2/2.2.6/bowtie2-2.2.6-linux-x86_64.zip
+download_and_unzip bowtie2-2.2.6-linux-x86_64.zip
 popd
 
 # Human, PhiX174 genomes
 pushd "$BIODATA_DIR"
-download_and_unzip \
-    http://microb234.med.upenn.edu/shotgun-pipeline-files/hg18.zip
-download_and_unzip \
-    http://microb234.med.upenn.edu/shotgun-pipeline-files/phix.zip
+download_and_unzip hg18.zip
+download_and_unzip phix.zip
 popd
+# TODO: build indexes
 
 
 ## STEP 4: Taxonomic assignment
@@ -86,7 +79,7 @@ pip install --upgrade \
 
 # metaphlan2
 pushd "$SOFTWARE_DIR"
-download_and_unzip https://bitbucket.org/biobakery/metaphlan2/get/default.zip
+download_and_unzip metaphlan2.zip
 popd
 pip install --upgrade numpy
 pip install --upgrade biom-format
@@ -107,4 +100,4 @@ popd
 # KEGG database
 download_and_unzip \
     http://microb234.med.upenn.edu/shotgun-pipeline-files/kegg.zip
-
+# TODO: build indexes
