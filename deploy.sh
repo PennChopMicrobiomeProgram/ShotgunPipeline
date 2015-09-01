@@ -93,11 +93,9 @@ pip install --upgrade \
 
 # Rapsearch2
 pushd "$SOFTWARE_DIR"
-download_and_unzip \
-    http://sourceforge.net/projects/rapsearch2/files/RAPSearch2.23_64bits.tar.gz
+download_and_unzip RAPSearch2.23_64bits.zip
 popd
 
 # KEGG database
-download_and_unzip \
-    http://microb234.med.upenn.edu/shotgun-pipeline-files/kegg.zip
+download_and_unzip kegg.zip
 # TODO: build indexes
