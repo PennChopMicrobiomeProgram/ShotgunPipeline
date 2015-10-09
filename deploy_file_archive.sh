@@ -9,11 +9,12 @@
 # same directory as the software files.
 #
 # Data files expected by the deployment script:
-#  - hg18.zip (Human genome in FASTA format)
+#  - hg38.zip (Human genome in FASTA format)
 #  - phix.zip (Phi X 174 genome in FASTA format)
 #  - kegg.zip (KEGG protein database in FASTA format)
 set -x
 set -e
+
 
 wget http://www.usadellab.org/cms/uploads/supplementary/Trimmomatic/Trimmomatic-0.33.zip
 wget http://www.bioinformatics.babraham.ac.uk/projects/fastqc/fastqc_v0.11.3.zip

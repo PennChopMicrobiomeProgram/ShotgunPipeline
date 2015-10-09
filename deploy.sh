@@ -2,6 +2,7 @@
 # Deploy all software necessary for ShotgunPipeline
 #
 # Does not (yet) build search indexes from FASTA files.
+# Does not (yet) write configuration files for the pipeline.
 #
 # Pre-requisites not included in deployment:
 # python (>= 2.7.3)
@@ -77,10 +78,9 @@ popd
 
 # Human, PhiX174 genomes
 pushd "$BIODATA_DIR"
-download_and_unzip hg18.zip
+download_and_unzip hg38.zip
 download_and_unzip phix.zip
 popd
-# TODO: build indexes
 
 
 ## STEP 4: Taxonomic assignment
