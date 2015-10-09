@@ -16,48 +16,44 @@ set -x
 set -e
 
 
+## STEP 2: Quality control
+
+# Trimmomatic
 wget http://www.usadellab.org/cms/uploads/supplementary/Trimmomatic/Trimmomatic-0.33.zip
+
+# FastQC
 wget http://www.bioinformatics.babraham.ac.uk/projects/fastqc/fastqc_v0.11.3.zip
+
+# seqtk
+wget https://github.com/lh3/seqtk/archive/4feb6e8144.zip
+mv 4feb6e8144.zip seqtk_4feb6e8144.zip
+
+
+## STEP 3: Decontamination
+
+# Bowtie2
 wget http://sourceforge.net/projects/bowtie-bio/files/bowtie2/2.2.6/bowtie2-2.2.6-linux-x86_64.zip
 
+# Bwa
+wget http://sourceforge.net/projects/bio-bwa/files/bwa-0.7.12.tar.bz2
+tar xvjf bwa-0.7.12.tar.bz2
+zip -r bwa-0.7.12.zip bwa-0.7.12
+rm bwa-0.7.12.tar.bz2
+rm -R bwa-0.7.12
+
+
+## STEP 4: Taxonomic assignment
 
 # MetaPhlan2
 wget https://bitbucket.org/biobakery/metaphlan2/get/61ad257cc091.zip
 mv 61ad257cc091.zip metaphlan2_61ad257cc091.zip
 
 
+## STEP 5: Functional assignment
+
 # RAPSearch2
-# Note for building on OSX: the BOOST library files in the Src
-# directory need to be replaced with ones compiled for OSX.  I found
-# that downloading the BOOST library source code and manually building
-# the library files worked best.
 wget http://sourceforge.net/projects/rapsearch2/files/RAPSearch2.23_64bits.tar.gz
 tar xvzf RAPSearch2.23_64bits.tar.gz
-pushd RAPSearch2.23_64bits
-./install
-popd
 zip -r RAPSearch2.23_64bits.zip RAPSearch2.23_64bits
 rm RAPSearch2.23_64bits.tar.gz
 rm -R RAPSearch2.23_64bits
-
-
-# seqtk
-wget https://github.com/lh3/seqtk/archive/4feb6e8144.zip
-unzip 4feb6e8144.zip
-pushd seqtk-4feb6e81444ab6bc44139dd3a125068f81ae4ad8
-make
-popd
-zip -r seqtk_4feb6e8144.zip seqtk-4feb6e81444ab6bc44139dd3a125068f81ae4ad8
-rm 4feb6e8144.zip
-rm -R seqtk-4feb6e81444ab6bc44139dd3a125068f81ae4ad8
-
-
-# Bwa
-wget http://sourceforge.net/projects/bio-bwa/files/bwa-0.7.12.tar.bz2
-tar xvjf bwa-0.7.12.tar.bz2
-pushd bwa-0.7.12
-make
-popd
-zip -r bwa-0.7.12.zip bwa-0.7.12
-rm bwa-0.7.12.tar.bz2
-rm -R bwa-0.7.12

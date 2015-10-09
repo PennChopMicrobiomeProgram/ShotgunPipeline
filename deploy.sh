@@ -59,6 +59,9 @@ popd
 # seqtk
 pushd "$SOFTWARE_DIR"
 download_and_unzip seqtk_4feb6e8144.zip
+pushd seqtk-4feb6e81444ab6bc44139dd3a125068f81ae4ad8
+make
+popd
 popd
 
 
@@ -77,6 +80,9 @@ popd
 # Bwa
 pushd "$SOFTWARE_DIR"
 download_and_unzip bwa-0.7.12.zip
+pushd bwa-0.7.12
+make
+popd
 popd
 
 # Human, PhiX174 genomes
@@ -109,6 +115,20 @@ pip install --upgrade \
 # Rapsearch2
 pushd "$SOFTWARE_DIR"
 download_and_unzip RAPSearch2.23_64bits.zip
+PLATFORM=`uname`
+if [ "$PLATFORM" == "Darwin" ]; then
+    echo "********************************************************************"
+    echo "Skipping build of RAPSeqrch on OSX"
+    echo "On OSX, the BOOST library files in the Src directory need to be"
+    echo "replaced with ones compiled for OSX.  We have found that downloading"
+    echo "the BOOST library source code and manually building the library"
+    echo "files worked best."
+    echo "********************************************************************"
+else
+    pushd RAPSearch2.23_64bits
+    ./install
+    popd
+fi
 popd
 
 # KEGG database
