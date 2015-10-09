@@ -1,6 +1,21 @@
 #!/bin/echo Please run this file with the source command
 # Deploy a python virtual environment for ShotgunPipeline
 #
+# After this code is sourced, virtualenv and virtualenvwrapper should
+# be installed, and a new virtual environment, shotgun-pipeline,
+# should be activated.
+#
+# To work in the virtual environment for future sessions, you need to
+# define the variables PATH, PYTHONPATH, and WORKON_HOME as below.
+# After this, you need to source the virtualenvwrapper.sh script,
+# located in $PIP_BIN.  It is best to do these things in your .bashrc
+# file. The indicated section below can be copied/pasted directly into
+# .bashrc for this purpose.
+#
+# In future sessions, after the varibales are correctly defined and
+# virtualenvwrapper.sh is sourced, the virtual environment may be
+# activated with the command "workon shotgun-pipeline".
+#
 # Pre-requisites not included in deployment:
 # python (>= 2.7.3)
 # pip
