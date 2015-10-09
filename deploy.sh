@@ -12,6 +12,9 @@ set -x
 set -e
 set -u
 
+VERSION="1.0"
+
+
 # Software and data directories
 
 SOFTWARE_DIR="$HOME/software"
@@ -24,7 +27,7 @@ mkdir -p "$BIODATA_DIR"
 # Functions
 
 download_and_unzip () {
-    wget "http://microb234.med.upenn.edu/shotgun-pipeline-files/$1"
+    wget "http://hivsystemsbiology.org/files/shotgun-pipeline/${VERSION}/${1}"
     unzip "$1"
     rm "$1"
 }
