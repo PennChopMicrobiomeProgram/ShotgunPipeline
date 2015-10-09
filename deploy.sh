@@ -52,6 +52,11 @@ pushd "$SOFTWARE_DIR"
 download_and_unzip fastqc_v0.11.3.zip
 popd
 
+# seqtk
+pushd "$SOFTWARE_DIR"
+download_and_unzip seqtk_4feb6e8144.zip
+popd
+
 
 ## STEP 3: Decontamination
 
@@ -63,6 +68,11 @@ pip install --upgrade pysam
 # Bowtie2
 pushd "$SOFTWARE_DIR"
 download_and_unzip bowtie2-2.2.6-linux-x86_64.zip
+popd
+
+# Bwa
+pushd "$SOFTWARE_DIR"
+download_and_unzip bwa-0.7.12.zip
 popd
 
 # Human, PhiX174 genomes
