@@ -91,7 +91,7 @@ pip install --upgrade \
 
 # metaphlan2
 pushd "$SOFTWARE_DIR"
-download_and_unzip metaphlan2.zip
+download_and_unzip metaphlan2_61ad257cc091.zip
 popd
 pip install --upgrade numpy
 pip install --upgrade biom-format

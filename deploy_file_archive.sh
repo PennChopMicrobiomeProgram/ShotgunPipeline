@@ -22,8 +22,8 @@ wget http://sourceforge.net/projects/bowtie-bio/files/bowtie2/2.2.6/bowtie2-2.2.
 
 
 # MetaPhlan2
-wget https://bitbucket.org/biobakery/metaphlan2/get/default.zip
-mv default.zip metaphlan2.zip
+wget https://bitbucket.org/biobakery/metaphlan2/get/61ad257cc091.zip
+mv 61ad257cc091.zip metaphlan2_61ad257cc091.zip
 
 
 # RAPSearch2
