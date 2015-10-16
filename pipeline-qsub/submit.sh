@@ -24,7 +24,7 @@ SAMPLES=$(cut -f 1 "$BC")
 
 # Demultiplexing job
 DEMULTIPLEX_JOBNAME="${JOB_PREFIX}-demultiplex"
-if [ -n $NO_QSUB ]; then
+if [ $NO_QSUB ]; then
     "$DEMULTIPLEX_SCRIPT_FP" "$WORK_DIR"
 else
     qsub -N "$DEMULTIPLEX_JOBNAME" "$DEMULTIPLEX_SCRIPT_FP" "$WORK_DIR"
@@ -34,9 +34,9 @@ fi
 # Sample processing jobs
 for SAMPLE in $SAMPLES; do
     SAMPLE_JOBNAME="${JOB_PREFIX}-sample-${SAMPLE}"
-    if [ -n $NO_QSUB ]; then
+    if [ $NO_QSUB ]; then
 	"$PROCESS_SAMPLE_SCRIPT_FP" "$WORK_DIR" "$SAMPLE"
     else
-	qsub -N "$SAMPLE_JOBNAME" "$PROCESS_SAMPLE_SCRIPT_FP" "$WORK_DIR" "$SAMPLE"
+	qsub -l h_vmem=8G -hold_jid "$DEMULTIPLEX_JOBNAME" -N "$SAMPLE_JOBNAME" "$PROCESS_SAMPLE_SCRIPT_FP" "$WORK_DIR" "$SAMPLE"
     fi
 done

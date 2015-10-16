@@ -11,6 +11,8 @@ fi
 # Command line arguments
 WORK_DIR="$1"
 
+SCRIPT_DIR="${HOME}/.virtualenvs/shotgun-pipeline/bin"
+
 # Standard input file names
 FWD="${WORK_DIR}/small_R1.fastq"
 REV="${WORK_DIR}/small_R2.fastq"
@@ -25,7 +27,7 @@ DNABC_OUTPUT_DIR="${WORK_DIR}/dnabc_results"
 mkdir -p $SUMMARY_DIR
 
 ## Demultiplexing
-dnabc.py \
+"${SCRIPT_DIR}/dnabc.py" \
     --forward-reads $FWD \
     --reverse-reads $REV \
     --barcode-file $BC \
