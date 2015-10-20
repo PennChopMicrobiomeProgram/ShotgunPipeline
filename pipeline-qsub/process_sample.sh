@@ -8,7 +8,7 @@ if [ $# -ne 2 ]; then
     exit 1
 fi
 
-export LD_LIBRARY_PATH=${LD_LIBRARY_PATH-}:/cm/shared/apps/python/2.7/lib:/cm/shared/apps/gcc/4.7.0/lib:/cm/shared/apps/gcc/4.7.0/lib64:/cm/shared/apps/sge/univa/8.1.3/lib/lx-amd64
+export LD_LIBRARY_PATH=${LD_LIBRARY_PATH-}:/cm/shared/apps/gcc/4.7.0/lib:/cm/shared/apps/gcc/4.7.0/lib64
 
 # Command line arguments
 WORK_DIR="$1"
