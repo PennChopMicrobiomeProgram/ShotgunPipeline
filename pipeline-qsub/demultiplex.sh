@@ -11,6 +11,7 @@ fi
 # Command line arguments
 WORK_DIR="$1"
 
+## We should consider moving this to config file!
 SCRIPT_DIR="${HOME}/.virtualenvs/shotgun-pipeline/bin"
 
 # Standard input file names

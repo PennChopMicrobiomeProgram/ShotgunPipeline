@@ -8,13 +8,13 @@ if [ $# -ne 2 ]; then
     exit 1
 fi
 
+## These two lines are respublica specific. Consider moving these to a config file!
 export LD_LIBRARY_PATH=${LD_LIBRARY_PATH-}:/cm/shared/apps/gcc/4.7.0/lib:/cm/shared/apps/gcc/4.7.0/lib64
+SCRIPT_DIR="${HOME}/.virtualenvs/shotgun-pipeline/bin"
 
 # Command line arguments
 WORK_DIR="$1"
 SAMPLE="$2"
-
-SCRIPT_DIR="${HOME}/.virtualenvs/shotgun-pipeline/bin"
 
 # Standard input file names
 DNABC_OUTPUT_DIR="${WORK_DIR}/dnabc_results"

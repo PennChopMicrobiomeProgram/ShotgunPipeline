@@ -10,7 +10,7 @@ fi
 # Command line arguments
 JOB_PREFIX="$1"
 WORK_DIR="$2"
-H_VMEM="$3"
+H_VMEM="$3" # Format is #G such as 20G
 
 # Path to other scripts
 SCRIPT_DIR=$( dirname "$0" )
