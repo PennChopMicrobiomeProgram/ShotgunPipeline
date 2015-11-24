@@ -22,7 +22,8 @@ DNABC_OUTPUT_DIR="${WORK_DIR}/dnabc_results"
 # Standard output file names
 SUMMARY_DIR="${WORK_DIR}/summary"
 ILLQC_SUMMARY="$SUMMARY_DIR/summary-illqc_${SAMPLE}.json"
-DECONTAM_SUMMARY="${SUMMARY_DIR}/summary-decontam_${SAMPLE}.json"
+DECONTAM_HUMAN_SUMMARY="${SUMMARY_DIR}/summary-decontam_human_${SAMPLE}.json"
+DECONTAM_PHIX_SUMMARY="${SUMMARY_DIR}/summary-decontam_phix_${SAMPLE}.json"
 PHYLO_SUMMARY="${SUMMARY_DIR}/summary-phylo_${SAMPLE}.json"
 PATHWAY_SUMMARY="${SUMMARY_DIR}/summary-pathway_${SAMPLE}.json"
 ILLQC_OUTPUT_DIR="${WORK_DIR}/illqc_results"
@@ -58,7 +59,7 @@ R2="PCMP_${SAMPLE}_R2.fastq"
     --forward-reads "${ILLQC_OUTPUT_DIR}/${R1}" \
     --reverse-reads "${ILLQC_OUTPUT_DIR}/${R2}" \
     --output-dir $DECONTAM_HUMAN_OUTPUT_DIR \
-    --summary-file $DECONTAM_SUMMARY \
+    --summary-file $DECONTAM_HUMAN_SUMMARY \
     --organism human
 
 ## Decontamination phix
@@ -66,7 +67,7 @@ R2="PCMP_${SAMPLE}_R2.fastq"
     --forward-reads "${DECONTAM_HUMAN_OUTPUT_DIR}/${R1}" \
     --reverse-reads "${DECONTAM_HUMAN_OUTPUT_DIR}/${R2}" \
     --output-dir $DECONTAM_PHIX_OUTPUT_DIR \
-    --summary-file $DECONTAM_SUMMARY \
+    --summary-file $DECONTAM_PHIX_SUMMARY \
     --organism phix
 
 # We are done with the illqc results and could delete them now
