@@ -61,6 +61,7 @@ R2="PCMP_${SAMPLE}_R2.fastq"
     --output-dir $DECONTAM_HUMAN_OUTPUT_DIR \
     --summary-file $DECONTAM_HUMAN_SUMMARY \
     --organism human
+#    --config-file "${HOME}/.decontam_rat.json"
 
 ## Decontamination phix
 "${SCRIPT_DIR}/decontaminate.py" \

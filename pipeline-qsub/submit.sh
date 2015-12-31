@@ -3,14 +3,15 @@ set -x
 set -e
 
 if [ $# -ne 3 ]; then
-    echo "Usage: $0 JOB_PREFIX WORK_DIR H_VMEM"
+    echo "Usage: $0 JOB_PREFIX WORK_DIR LANE_NUM H_VMEM"
     exit 1
 fi
 
 # Command line arguments
 JOB_PREFIX="$1"
 WORK_DIR="$2"
-H_VMEM="$3" # Format is #G such as 20G
+LANE_NUM="$3" # Format is lane number by itself or padded with zeros (eg. 1, 01, 001)
+H_VMEM="$4" # Format is #G such as 20G
 
 # Path to other scripts
 SCRIPT_DIR=$( dirname "$0" )
@@ -28,7 +29,7 @@ DEMULTIPLEX_JOBNAME="${JOB_PREFIX}-demultiplex"
 if [ $NO_QSUB ]; then
     "$DEMULTIPLEX_SCRIPT_FP" "$WORK_DIR"
 else
-    qsub -r n -l h_vmem=$H_VMEM -N "$DEMULTIPLEX_JOBNAME" "$DEMULTIPLEX_SCRIPT_FP" "$WORK_DIR"
+    qsub -r n -l h_vmem=$H_VMEM -N "$DEMULTIPLEX_JOBNAME" "$DEMULTIPLEX_SCRIPT_FP" "$WORK_DIR" "$LANE_NUM"
 fi
 
 
@@ -38,6 +39,6 @@ for SAMPLE in $SAMPLES; do
     if [ $NO_QSUB ]; then
 	"$PROCESS_SAMPLE_SCRIPT_FP" "$WORK_DIR" "$SAMPLE"
     else
-	qsub -r n -l h_vmem=$H_VMEM -hold_jid "$DEMULTIPLEX_JOBNAME" -N "$SAMPLE_JOBNAME" "$PROCESS_SAMPLE_SCRIPT_FP" "$WORK_DIR" "$SAMPLE"
+	qsub -r n -l h_vmem=$H_VMEM -l h_core=8 -hold_jid "$DEMULTIPLEX_JOBNAME" -N "$SAMPLE_JOBNAME" "$PROCESS_SAMPLE_SCRIPT_FP" "$WORK_DIR" "$SAMPLE"
     fi
 done
