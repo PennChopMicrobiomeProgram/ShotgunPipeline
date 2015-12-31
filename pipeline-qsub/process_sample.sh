@@ -22,13 +22,13 @@ DNABC_OUTPUT_DIR="${WORK_DIR}/dnabc_results"
 # Standard output file names
 SUMMARY_DIR="${WORK_DIR}/summary"
 ILLQC_SUMMARY="$SUMMARY_DIR/summary-illqc_${SAMPLE}.json"
-DECONTAM_HUMAN_SUMMARY="${SUMMARY_DIR}/summary-decontam_human_${SAMPLE}.json"
+DECONTAM_HOST_SUMMARY="${SUMMARY_DIR}/summary-decontam_host_${SAMPLE}.json"
 DECONTAM_PHIX_SUMMARY="${SUMMARY_DIR}/summary-decontam_phix_${SAMPLE}.json"
 PHYLO_SUMMARY="${SUMMARY_DIR}/summary-phylo_${SAMPLE}.json"
 PATHWAY_SUMMARY="${SUMMARY_DIR}/summary-pathway_${SAMPLE}.json"
 ILLQC_OUTPUT_DIR="${WORK_DIR}/illqc_results"
 ILLQC_QC_OUTPUT_DIR="${WORK_DIR}/illqc_reports"
-DECONTAM_HUMAN_OUTPUT_DIR="${WORK_DIR}/decontam_human_results"
+DECONTAM_HOST_OUTPUT_DIR="${WORK_DIR}/decontam_host_results"
 DECONTAM_PHIX_OUTPUT_DIR="${WORK_DIR}/decontam_phix_results"
 PHYLO_OUTPUT_DIR="${WORK_DIR}/phyloprofiler_results"
 PATHWAY_OUTPUT_DIR="${WORK_DIR}/pathfinder_results"
@@ -54,19 +54,19 @@ R2="PCMP_${SAMPLE}_R2.fastq"
 # rm "${DNABC_OUTPUT_DIR}/${R2}"
 
 
-## Decontamination human
+## Decontamination host
 "${SCRIPT_DIR}/decontaminate.py" \
     --forward-reads "${ILLQC_OUTPUT_DIR}/${R1}" \
     --reverse-reads "${ILLQC_OUTPUT_DIR}/${R2}" \
-    --output-dir $DECONTAM_HUMAN_OUTPUT_DIR \
-    --summary-file $DECONTAM_HUMAN_SUMMARY \
-    --organism human
+    --output-dir $DECONTAM_HOST_OUTPUT_DIR \
+    --summary-file $DECONTAM_HOST_SUMMARY \
+    --organism host
 #    --config-file "${HOME}/.decontam_rat.json"
 
 ## Decontamination phix
 "${SCRIPT_DIR}/decontaminate.py" \
-    --forward-reads "${DECONTAM_HUMAN_OUTPUT_DIR}/${R1}" \
-    --reverse-reads "${DECONTAM_HUMAN_OUTPUT_DIR}/${R2}" \
+    --forward-reads "${DECONTAM_HOST_OUTPUT_DIR}/${R1}" \
+    --reverse-reads "${DECONTAM_HOST_OUTPUT_DIR}/${R2}" \
     --output-dir $DECONTAM_PHIX_OUTPUT_DIR \
     --summary-file $DECONTAM_PHIX_SUMMARY \
     --organism phix
