@@ -54,6 +54,9 @@ popd
 # FastQC
 pushd "$SOFTWARE_DIR"
 download_and_unzip fastqc_v0.11.3.zip
+pushd FastQC
+chmod +x fastqc
+popd
 popd
 
 # seqtk
