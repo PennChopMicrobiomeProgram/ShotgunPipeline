@@ -114,6 +114,7 @@ pip install --upgrade biom-format
 # PathwayAbundanceFinder
 pip install --upgrade \
     git+https://github.com/PennChopMicrobiomeProgram/PathwayAbundanceFinder.git
+pip install --ignore-installed six
 
 # Rapsearch2
 pushd "$SOFTWARE_DIR"
