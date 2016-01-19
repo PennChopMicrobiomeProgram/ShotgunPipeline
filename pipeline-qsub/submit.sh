@@ -2,7 +2,7 @@
 set -x
 set -e
 
-if [ $# -ne 3 ]; then
+if [ $# -ne 4 ]; then
     echo "Usage: $0 JOB_PREFIX WORK_DIR LANE_NUM H_VMEM"
     exit 1
 fi
