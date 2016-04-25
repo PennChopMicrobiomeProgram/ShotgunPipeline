@@ -40,7 +40,6 @@ mkdir -p $SUMMARY_DIR
 R1="PCMP_${SAMPLE}_R1.fastq"
 R2="PCMP_${SAMPLE}_R2.fastq"
 
-
 ## Quality control
 "${SCRIPT_DIR}/illqc.py" \
     --forward-reads "${DNABC_OUTPUT_DIR}/${R1}" \
@@ -53,27 +52,25 @@ R2="PCMP_${SAMPLE}_R2.fastq"
 # rm "${DNABC_OUTPUT_DIR}/${R1}"
 # rm "${DNABC_OUTPUT_DIR}/${R2}"
 
-
-## Decontamination human
+## Decontamination phix
 "${SCRIPT_DIR}/decontaminate.py" \
     --forward-reads "${ILLQC_OUTPUT_DIR}/${R1}" \
     --reverse-reads "${ILLQC_OUTPUT_DIR}/${R2}" \
-    --output-dir $DECONTAM_HUMAN_OUTPUT_DIR \
-    --summary-file $DECONTAM_HUMAN_SUMMARY \
-    --organism human
-
-## Decontamination phix
-"${SCRIPT_DIR}/decontaminate.py" \
-    --forward-reads "${DECONTAM_HUMAN_OUTPUT_DIR}/${R1}" \
-    --reverse-reads "${DECONTAM_HUMAN_OUTPUT_DIR}/${R2}" \
     --output-dir $DECONTAM_PHIX_OUTPUT_DIR \
     --summary-file $DECONTAM_PHIX_SUMMARY \
     --organism phix
 
+## Decontamination human
+"${SCRIPT_DIR}/decontaminate.py" \
+    --forward-reads "${DECONTAM_PHIX_OUTPUT_DIR}/${R1}" \
+    --reverse-reads "${DECONTAM_PHIX_OUTPUT_DIR}/${R2}" \
+    --output-dir $DECONTAM_HUMAN_OUTPUT_DIR \
+    --summary-file $DECONTAM_HUMAN_SUMMARY \
+    --organism human
+
 # We are done with the illqc results and could delete them now
 # rm "${ILLQC_OUTPUT_DIR}/${R1}"
 # rm "${ILLQC_OUTPUT_DIR}/${R2}"
-
 
 ## Taxonomic assignment
 "${SCRIPT_DIR}/phyloprofiler.py" \
@@ -81,7 +78,6 @@ R2="PCMP_${SAMPLE}_R2.fastq"
     --reverse-reads "${DECONTAM_PHIX_OUTPUT_DIR}/${R2}" \
     --output-dir $PHYLO_OUTPUT_DIR \
     --summary-file $PHYLO_SUMMARY
-
 
 ## Functional assignment
 "${SCRIPT_DIR}/pathfinder.py" \

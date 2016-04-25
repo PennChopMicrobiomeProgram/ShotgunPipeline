@@ -49,27 +49,27 @@ for DNABC_R1_FILE in $DNABC_OUTPUT_DIR/*_R1.fastq; do
     # rm "${DNABC_OUTPUT_DIR}/$SAMPLE_R2"
 
     ## Decontamination
-    log "START:decontaminate human ${SAMPLE_NAME}"
-    DECONTAM_HUMAN_SUMMARY="${SUMMARY_DIR}/summary-decontam_human_${SAMPLE_NAME}.json"
-    DECONTAM_HUMAN_OUTPUT_DIR="decontam_human_results"
-    decontaminate.py \
-	--forward-reads "$ILLQC_OUTPUT_DIR/$SAMPLE_R1" \
-	--reverse-reads "$ILLQC_OUTPUT_DIR/$SAMPLE_R2" \
-	--organism human \
-	--output-dir $DECONTAM_HUMAN_OUTPUT_DIR \
-	--summary-file $DECONTAM_HUMAN_SUMMARY
-    log "FINISH:decontaminate human ${SAMPLE_NAME}"
-    
     log "START:decontaminate phix ${SAMPLE_NAME}"
     DECONTAM_PHIX_SUMMARY="${SUMMARY_DIR}/summary-decontam_phix_${SAMPLE_NAME}.json"
     DECONTAM_PHIX_OUTPUT_DIR="decontam_phix_results"
     decontaminate.py \
-	--forward-reads "$DECONTAM_HUMAN_OUTPUT_DIR/$SAMPLE_R1" \
-	--reverse-reads "$DECONTAM_HUMAN_OUTPUT_DIR/$SAMPLE_R2" \
+	--forward-reads "$ILLQC_OUTPUT_DIR/$SAMPLE_R1" \
+	--reverse-reads "$ILLQC_OUTPUT_DIR/$SAMPLE_R2" \
 	--organism phix \
 	--output-dir $DECONTAM_PHIX_OUTPUT_DIR \
 	--summary-file $DECONTAM_PHIX_SUMMARY
     log "FINISH:decontaminate phix ${SAMPLE_NAME}"
+
+    log "START:decontaminate human ${SAMPLE_NAME}"
+    DECONTAM_HUMAN_SUMMARY="${SUMMARY_DIR}/summary-decontam_human_${SAMPLE_NAME}.json"
+    DECONTAM_HUMAN_OUTPUT_DIR="decontam_human_results"
+    decontaminate.py \
+	--forward-reads "$DECONTAM_PHIX_OUTPUT_DIR/$SAMPLE_R1" \
+	--reverse-reads "$DECONTAM_PHIX_OUTPUT_DIR/$SAMPLE_R2" \
+	--organism human \
+	--output-dir $DECONTAM_HUMAN_OUTPUT_DIR \
+	--summary-file $DECONTAM_HUMAN_SUMMARY
+    log "FINISH:decontaminate human ${SAMPLE_NAME}"
 
     # We are done with the illqc results and could delete them now
     # rm "$ILLQC_OUTPUT_DIR/$SAMPLE_R1"
