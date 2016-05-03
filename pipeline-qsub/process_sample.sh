@@ -10,7 +10,8 @@ fi
 
 ## These two lines are respublica specific. Consider moving these to a config file!
 export LD_LIBRARY_PATH=${LD_LIBRARY_PATH-}:/cm/shared/apps/gcc/4.7.0/lib:/cm/shared/apps/gcc/4.7.0/lib64
-SCRIPT_DIR="${HOME}/.virtualenvs/shotgun-pipeline/bin"
+export PATH=${PATH-}:"${HOME}/.virtualenvs/shotgun-pipeline/bin:${HOME}/.local/bin"
+export PYTHONPATH=${PYTHONPATH-}:"${HOME}/.virtualenvs/shotgun-pipeline/lib/python2.7/site-packages/:${HOME}/.local/lib/python2.7/site-packages"
 
 # Command line arguments
 WORK_DIR="$1"
@@ -42,7 +43,7 @@ R2="PCMP_${SAMPLE}_R2.fastq"
 
 
 ## Quality control
-"${SCRIPT_DIR}/illqc.py" \
+illqc.py \
     --forward-reads "${DNABC_OUTPUT_DIR}/${R1}" \
     --reverse-reads "${DNABC_OUTPUT_DIR}/${R2}" \
     --output-dir $ILLQC_OUTPUT_DIR \
@@ -55,16 +56,15 @@ R2="PCMP_${SAMPLE}_R2.fastq"
 
 
 ## Decontamination host
-"${SCRIPT_DIR}/decontaminate.py" \
+decontaminate.py \
     --forward-reads "${ILLQC_OUTPUT_DIR}/${R1}" \
     --reverse-reads "${ILLQC_OUTPUT_DIR}/${R2}" \
     --output-dir $DECONTAM_HOST_OUTPUT_DIR \
     --summary-file $DECONTAM_HOST_SUMMARY \
     --organism host
-#    --config-file "${HOME}/.decontam_rat.json"
 
 ## Decontamination phix
-"${SCRIPT_DIR}/decontaminate.py" \
+decontaminate.py \
     --forward-reads "${DECONTAM_HOST_OUTPUT_DIR}/${R1}" \
     --reverse-reads "${DECONTAM_HOST_OUTPUT_DIR}/${R2}" \
     --output-dir $DECONTAM_PHIX_OUTPUT_DIR \
@@ -77,7 +77,7 @@ R2="PCMP_${SAMPLE}_R2.fastq"
 
 
 ## Taxonomic assignment
-"${SCRIPT_DIR}/phyloprofiler.py" \
+phyloprofiler.py \
     --forward-reads "${DECONTAM_PHIX_OUTPUT_DIR}/${R1}" \
     --reverse-reads "${DECONTAM_PHIX_OUTPUT_DIR}/${R2}" \
     --output-dir $PHYLO_OUTPUT_DIR \
@@ -85,8 +85,9 @@ R2="PCMP_${SAMPLE}_R2.fastq"
 
 
 ## Functional assignment
-"${SCRIPT_DIR}/pathfinder.py" \
+pathfinder.py \
     --forward-reads "${DECONTAM_PHIX_OUTPUT_DIR}/${R1}" \
     --reverse-reads "${DECONTAM_PHIX_OUTPUT_DIR}/${R2}" \
     --output-dir $PATHWAY_OUTPUT_DIR \
     --summary-file $PATHWAY_SUMMARY
+

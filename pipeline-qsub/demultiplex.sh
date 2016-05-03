@@ -13,7 +13,8 @@ WORK_DIR="$1"
 LANE_NUM="$2"
 
 ## We should consider moving this to config file!
-SCRIPT_DIR="${HOME}/.virtualenvs/shotgun-pipeline/bin"
+export PATH=${PATH-}:"${HOME}/.virtualenvs/shotgun-pipeline/bin:${HOME}/.local/bin"
+export PYTHONPATH=${PYTHONPATH-}:"${HOME}/.virtualenvs/shotgun-pipeline/lib/python2.7/site-packages/:${HOME}/.local/lib/python2.7/site-packages"
 
 # Standard input file names
 BC="${WORK_DIR}/barcodes.txt"
@@ -29,7 +30,7 @@ DNABC_OUTPUT_DIR="${WORK_DIR}/dnabc_results"
 mkdir -p $SUMMARY_DIR
 
 ## Demultiplexing
-"${SCRIPT_DIR}/dnabc.py" \
+dnabc.py \
     --forward-reads $FWD \
     --reverse-reads $REV \
     --barcode-file $BC \
