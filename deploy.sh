@@ -54,6 +54,9 @@ popd
 # FastQC
 pushd "$SOFTWARE_DIR"
 download_and_unzip fastqc_v0.11.3.zip
+pushd FastQC
+chmod +x fastqc
+popd
 popd
 
 # seqtk
@@ -111,6 +114,7 @@ pip install --upgrade biom-format
 # PathwayAbundanceFinder
 pip install --upgrade \
     git+https://github.com/PennChopMicrobiomeProgram/PathwayAbundanceFinder.git
+pip install --ignore-installed six
 
 # Rapsearch2
 pushd "$SOFTWARE_DIR"

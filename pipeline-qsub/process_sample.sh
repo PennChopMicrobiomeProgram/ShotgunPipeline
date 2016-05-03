@@ -10,7 +10,8 @@ fi
 
 ## These two lines are respublica specific. Consider moving these to a config file!
 export LD_LIBRARY_PATH=${LD_LIBRARY_PATH-}:/cm/shared/apps/gcc/4.7.0/lib:/cm/shared/apps/gcc/4.7.0/lib64
-SCRIPT_DIR="${HOME}/.virtualenvs/shotgun-pipeline/bin"
+export PATH=${PATH-}:"${HOME}/.virtualenvs/shotgun-pipeline/bin:${HOME}/.local/bin"
+export PYTHONPATH=${PYTHONPATH-}:"${HOME}/.virtualenvs/shotgun-pipeline/lib/python2.7/site-packages/:${HOME}/.local/lib/python2.7/site-packages"
 
 # Command line arguments
 WORK_DIR="$1"
@@ -22,13 +23,13 @@ DNABC_OUTPUT_DIR="${WORK_DIR}/dnabc_results"
 # Standard output file names
 SUMMARY_DIR="${WORK_DIR}/summary"
 ILLQC_SUMMARY="$SUMMARY_DIR/summary-illqc_${SAMPLE}.json"
-DECONTAM_HUMAN_SUMMARY="${SUMMARY_DIR}/summary-decontam_human_${SAMPLE}.json"
+DECONTAM_HOST_SUMMARY="${SUMMARY_DIR}/summary-decontam_host_${SAMPLE}.json"
 DECONTAM_PHIX_SUMMARY="${SUMMARY_DIR}/summary-decontam_phix_${SAMPLE}.json"
 PHYLO_SUMMARY="${SUMMARY_DIR}/summary-phylo_${SAMPLE}.json"
 PATHWAY_SUMMARY="${SUMMARY_DIR}/summary-pathway_${SAMPLE}.json"
 ILLQC_OUTPUT_DIR="${WORK_DIR}/illqc_results"
 ILLQC_QC_OUTPUT_DIR="${WORK_DIR}/illqc_reports"
-DECONTAM_HUMAN_OUTPUT_DIR="${WORK_DIR}/decontam_human_results"
+DECONTAM_HOST_OUTPUT_DIR="${WORK_DIR}/decontam_host_results"
 DECONTAM_PHIX_OUTPUT_DIR="${WORK_DIR}/decontam_phix_results"
 PHYLO_OUTPUT_DIR="${WORK_DIR}/phyloprofiler_results"
 PATHWAY_OUTPUT_DIR="${WORK_DIR}/pathfinder_results"
@@ -41,7 +42,7 @@ R1="PCMP_${SAMPLE}_R1.fastq"
 R2="PCMP_${SAMPLE}_R2.fastq"
 
 ## Quality control
-"${SCRIPT_DIR}/illqc.py" \
+illqc.py \
     --forward-reads "${DNABC_OUTPUT_DIR}/${R1}" \
     --reverse-reads "${DNABC_OUTPUT_DIR}/${R2}" \
     --output-dir $ILLQC_OUTPUT_DIR \
@@ -53,7 +54,7 @@ R2="PCMP_${SAMPLE}_R2.fastq"
 # rm "${DNABC_OUTPUT_DIR}/${R2}"
 
 ## Decontamination phix
-"${SCRIPT_DIR}/decontaminate.py" \
+decontaminate.py \
     --forward-reads "${ILLQC_OUTPUT_DIR}/${R1}" \
     --reverse-reads "${ILLQC_OUTPUT_DIR}/${R2}" \
     --output-dir $DECONTAM_PHIX_OUTPUT_DIR \
@@ -61,7 +62,7 @@ R2="PCMP_${SAMPLE}_R2.fastq"
     --organism phix
 
 ## Decontamination human
-"${SCRIPT_DIR}/decontaminate.py" \
+decontaminate.py \
     --forward-reads "${DECONTAM_PHIX_OUTPUT_DIR}/${R1}" \
     --reverse-reads "${DECONTAM_PHIX_OUTPUT_DIR}/${R2}" \
     --output-dir $DECONTAM_HUMAN_OUTPUT_DIR \
@@ -73,15 +74,16 @@ R2="PCMP_${SAMPLE}_R2.fastq"
 # rm "${ILLQC_OUTPUT_DIR}/${R2}"
 
 ## Taxonomic assignment
-"${SCRIPT_DIR}/phyloprofiler.py" \
+phyloprofiler.py \
     --forward-reads "${DECONTAM_PHIX_OUTPUT_DIR}/${R1}" \
     --reverse-reads "${DECONTAM_PHIX_OUTPUT_DIR}/${R2}" \
     --output-dir $PHYLO_OUTPUT_DIR \
     --summary-file $PHYLO_SUMMARY
 
 ## Functional assignment
-"${SCRIPT_DIR}/pathfinder.py" \
+pathfinder.py \
     --forward-reads "${DECONTAM_PHIX_OUTPUT_DIR}/${R1}" \
     --reverse-reads "${DECONTAM_PHIX_OUTPUT_DIR}/${R2}" \
     --output-dir $PATHWAY_OUTPUT_DIR \
     --summary-file $PATHWAY_SUMMARY
+

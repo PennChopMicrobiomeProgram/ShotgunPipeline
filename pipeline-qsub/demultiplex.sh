@@ -3,21 +3,23 @@ set -x
 set -e
 set -u
 
-if [ $# -ne 1 ]; then
-    echo "Usage: $0 WORK_DIR"
+if [ $# -ne 2 ]; then
+    echo "Usage: $0 WORK_DIR LANE_NUM"
     exit 1
 fi
 
 # Command line arguments
 WORK_DIR="$1"
+LANE_NUM="$2"
 
 ## We should consider moving this to config file!
-SCRIPT_DIR="${HOME}/.virtualenvs/shotgun-pipeline/bin"
+export PATH=${PATH-}:"${HOME}/.virtualenvs/shotgun-pipeline/bin:${HOME}/.local/bin"
+export PYTHONPATH=${PYTHONPATH-}:"${HOME}/.virtualenvs/shotgun-pipeline/lib/python2.7/site-packages/:${HOME}/.local/lib/python2.7/site-packages"
 
 # Standard input file names
-FWD="${WORK_DIR}/small_R1.fastq"
-REV="${WORK_DIR}/small_R2.fastq"
 BC="${WORK_DIR}/barcodes.txt"
+FWD="${WORK_DIR}/Undetermined_S0_L$(printf "%03d" $LANE_NUM)_R1_001.fastq"
+REV="${WORK_DIR}/Undetermined_S0_L$(printf "%03d" $LANE_NUM)_R2_001.fastq"
 
 # Standard output file names
 SUMMARY_DIR="${WORK_DIR}/summary"
@@ -28,7 +30,7 @@ DNABC_OUTPUT_DIR="${WORK_DIR}/dnabc_results"
 mkdir -p $SUMMARY_DIR
 
 ## Demultiplexing
-"${SCRIPT_DIR}/dnabc.py" \
+dnabc.py \
     --forward-reads $FWD \
     --reverse-reads $REV \
     --barcode-file $BC \
