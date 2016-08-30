@@ -65,9 +65,9 @@ decontaminate.py \
 decontaminate.py \
     --forward-reads "${DECONTAM_PHIX_OUTPUT_DIR}/${R1}" \
     --reverse-reads "${DECONTAM_PHIX_OUTPUT_DIR}/${R2}" \
-    --output-dir $DECONTAM_HUMAN_OUTPUT_DIR \
-    --summary-file $DECONTAM_HUMAN_SUMMARY \
-    --organism human
+    --output-dir $DECONTAM_HOST_OUTPUT_DIR \
+    --summary-file $DECONTAM_HOST_SUMMARY \
+    --organism host
 
 # We are done with the illqc results and could delete them now
 # rm "${ILLQC_OUTPUT_DIR}/${R1}"
@@ -75,15 +75,15 @@ decontaminate.py \
 
 ## Taxonomic assignment
 phyloprofiler.py \
-    --forward-reads "${DECONTAM_PHIX_OUTPUT_DIR}/${R1}" \
-    --reverse-reads "${DECONTAM_PHIX_OUTPUT_DIR}/${R2}" \
+    --forward-reads "${DECONTAM_HOST_OUTPUT_DIR}/${R1}" \
+    --reverse-reads "${DECONTAM_HOST_OUTPUT_DIR}/${R2}" \
     --output-dir $PHYLO_OUTPUT_DIR \
     --summary-file $PHYLO_SUMMARY
 
 ## Functional assignment
 pathfinder.py \
-    --forward-reads "${DECONTAM_PHIX_OUTPUT_DIR}/${R1}" \
-    --reverse-reads "${DECONTAM_PHIX_OUTPUT_DIR}/${R2}" \
+    --forward-reads "${DECONTAM_HOST_OUTPUT_DIR}/${R1}" \
+    --reverse-reads "${DECONTAM_HOST_OUTPUT_DIR}/${R2}" \
     --output-dir $PATHWAY_OUTPUT_DIR \
     --summary-file $PATHWAY_SUMMARY
 
