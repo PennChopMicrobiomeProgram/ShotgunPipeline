@@ -17,8 +17,6 @@ H_VMEM="$4" # Format is #G such as 20G
 SCRIPT_DIR=$( dirname "$0" )
 DEMULTIPLEX_SCRIPT_FP="${SCRIPT_DIR}/demultiplex.sh"
 PROCESS_SAMPLE_SCRIPT_FP="${SCRIPT_DIR}/process_sample.sh"
-#PROCESS_SAMPLE_SCRIPT_FP="${SCRIPT_DIR}/process_sample_path.sh"
-
 
 # Standard input file names
 BC="${WORK_DIR}/barcodes.txt"
